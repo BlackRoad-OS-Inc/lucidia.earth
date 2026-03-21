@@ -1,0 +1,25 @@
+{
+  "name": "lucidia.earth",
+  "org": "BlackRoad-OS-Inc",
+  "category": "agents",
+  "title": "Lucidia Earth",
+  "deploy": {
+    "target": "gematria",
+    "path": "/var/www/blackroad/lucidia.earth",
+    "ssl": "auto",
+    "cdn": true
+  },
+  "mirrors": {
+    "gitea": "https://git.blackroad.io/BlackRoad-OS-Inc/lucidia.earth",
+    "github": "https://github.com/BlackRoad-OS-Inc/lucidia.earth"
+  },
+  "ci": {
+    "on_push": ["build", "deploy"],
+    "on_pr": ["lint", "audit"]
+  },
+  "monitoring": {
+    "uptime": true,
+    "analytics": "roadanalytics",
+    "alerts": "nats"
+  }
+}
