@@ -3,834 +3,280 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lucidia Earth — Worlds That Remember</title>
+<title>Lucidia — AI That Remembers You</title>
+<meta name="description" content="Lucidia is an AI companion with persistent memory. She runs on your hardware, remembers every conversation, and never sends your data to the cloud. Built by BlackRoad OS, Inc.">
+<meta property="og:title" content="Lucidia — AI That Remembers You">
+<meta property="og:description" content="AI with persistent memory across every device, every session, every agent. She runs on your hardware. She remembers who you are.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://lucidia.earth">
+<meta property="og:image" content="https://images.blackroad.io/pixel-art/road-logo.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://lucidia.earth">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💡</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root {
-  --g: linear-gradient(90deg,#FF6B2B,#FF2255,#CC00AA,#8844FF,#4488FF,#00D4FF);
-  --border: #1a1a1a;
-  --sg: 'Space Grotesk', sans-serif;
-  --jb: 'JetBrains Mono', monospace;
-  --bg: #000;
-  --text: #fff;
-  --text-dim: #888;
-  --card-bg: #0a0a0a;
-}
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body { background: var(--bg); color: var(--text); font-family: var(--sg); line-height: 1.6; overflow-x: hidden; }
-.gradient-bar { height: 4px; background: var(--g); width: 100%; position: fixed; top: 0; left: 0; z-index: 1000; }
-nav {
-  position: fixed; top: 4px; left: 0; right: 0; z-index: 999;
-  background: rgba(0,0,0,0.92); border-bottom: 1px solid var(--border);
-  padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 64px;
-}
-.logo { font-family: var(--sg); font-weight: 700; font-size: 1.25rem; }
-.logo span { background: var(--g); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-.nav-links { display: flex; gap: 1.5rem; list-style: none; }
-.nav-links a { color: var(--text-dim); text-decoration: none; font-size: 0.875rem; font-family: var(--jb); transition: color 0.3s; }
-.nav-links a:hover { color: var(--text); }
-.section-label { font-family: var(--jb); font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; opacity: 0.25; margin-bottom: 1rem; }
-.fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
-.fade-in.visible { opacity: 1; transform: translateY(0); }
-section { padding: 6rem 2rem; max-width: 1200px; margin: 0 auto; }
-h1 { font-family: var(--sg); font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 700; line-height: 1.1; letter-spacing: -0.03em; }
-h2 { font-family: var(--sg); font-size: clamp(1.75rem, 4vw, 2.75rem); font-weight: 600; line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 1.5rem; }
-h3 { font-family: var(--sg); font-size: 1.25rem; font-weight: 600; margin-bottom: 0.75rem; }
-p { color: var(--text-dim); font-size: 1.05rem; line-height: 1.7; }
-.hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding-top: 68px; position: relative; }
-.hero h1 { margin-bottom: 1.5rem; }
-.hero .subtitle { font-size: clamp(1.1rem, 2.5vw, 1.35rem); color: var(--text-dim); max-width: 640px; margin-bottom: 2.5rem; }
-.hero-gradient {
-  position: absolute; top: 20%; left: 50%; transform: translateX(-50%);
-  width: 800px; height: 800px; border-radius: 50%;
-  background: radial-gradient(circle, rgba(136,68,255,0.06) 0%, rgba(0,212,255,0.03) 40%, transparent 70%);
-  pointer-events: none; z-index: -1;
-}
-.btn-primary {
-  display: inline-block; padding: 0.875rem 2rem; border-radius: 8px;
-  background: var(--g); color: #fff; text-decoration: none; font-weight: 600;
-  font-family: var(--sg); font-size: 1rem; border: none; cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(136,68,255,0.3); }
-.btn-secondary {
-  display: inline-block; padding: 0.875rem 2rem; border-radius: 8px;
-  background: transparent; color: var(--text); text-decoration: none;
-  font-weight: 500; font-family: var(--sg); font-size: 1rem;
-  border: 1px solid var(--border); cursor: pointer; transition: border-color 0.3s;
-}
-.btn-secondary:hover { border-color: #444; }
-.btn-group { display: flex; gap: 1rem; flex-wrap: wrap; }
-.card { border: 1px solid var(--border); border-radius: 10px; padding: 2rem; background: var(--card-bg); transition: border-color 0.3s; }
-.card:hover { border-color: #333; }
-.grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; }
-.grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
-.stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 2rem; margin: 3rem 0; }
-.stat { text-align: center; }
-.stat .number { font-family: var(--sg); font-size: 2.5rem; font-weight: 700; background: var(--g); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-.stat .label { font-family: var(--jb); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dim); margin-top: 0.25rem; }
-.tag { display: inline-block; padding: 0.25rem 0.75rem; border-radius: 20px; border: 1px solid var(--border); font-family: var(--jb); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-dim); margin-bottom: 1rem; }
-.divider { height: 1px; background: var(--border); margin: 0 auto; max-width: 1200px; }
-.feature-list { list-style: none; margin: 1rem 0; }
-.feature-list li { padding: 0.5rem 0; color: var(--text-dim); font-size: 0.95rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 0.75rem; }
-.feature-list li::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #8844FF; flex-shrink: 0; }
-.floor-list { margin-top: 2rem; }
-.floor-item {
-  display: grid; grid-template-columns: 80px 1fr; gap: 1.5rem;
-  padding: 1.25rem 0; border-bottom: 1px solid var(--border);
-  align-items: start;
-}
-.floor-number {
-  font-family: var(--jb); font-size: 0.7rem; text-transform: uppercase;
-  letter-spacing: 0.1em; padding: 0.5rem 0;
-}
-.floor-name { font-weight: 600; margin-bottom: 0.25rem; }
-.floor-desc { font-size: 0.85rem; color: var(--text-dim); }
-.floor-agents { font-family: var(--jb); font-size: 0.7rem; color: #8844FF; margin-top: 0.25rem; }
-.agent-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-top: 2rem; }
-.agent-card {
-  border: 1px solid var(--border); border-radius: 10px; padding: 1.25rem;
-  background: var(--card-bg); text-align: center; transition: border-color 0.3s;
-}
-.agent-card:hover { border-color: #8844FF; }
-.agent-avatar { font-size: 2rem; margin-bottom: 0.5rem; }
-.agent-name { font-weight: 600; font-size: 0.9rem; margin-bottom: 0.15rem; }
-.agent-role { font-family: var(--jb); font-size: 0.65rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.08em; }
-.economy-visual {
-  border: 1px solid var(--border); border-radius: 10px; padding: 2.5rem;
-  background: var(--card-bg); margin-top: 2rem; position: relative; overflow: hidden;
-}
-.economy-flow {
-  display: flex; align-items: center; justify-content: center; gap: 1rem;
-  flex-wrap: wrap; margin: 2rem 0;
-}
-.economy-node {
-  border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.5rem;
-  background: rgba(136,68,255,0.03); text-align: center; min-width: 120px;
-}
-.economy-node-name { font-weight: 600; font-size: 0.9rem; margin-bottom: 0.25rem; }
-.economy-node-desc { font-family: var(--jb); font-size: 0.65rem; color: var(--text-dim); }
-.economy-arrow { font-size: 1.5rem; color: var(--text-dim); }
-.vision-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
-.vision-card {
-  border: 1px solid var(--border); border-radius: 10px; padding: 2rem;
-  background: var(--card-bg); position: relative;
-}
-.vision-card .icon { font-size: 2rem; margin-bottom: 1rem; }
-.bridge-demo {
-  border: 1px solid var(--border); border-radius: 10px; padding: 2rem;
-  background: var(--card-bg); margin-top: 2rem; position: relative;
-  min-height: 300px; overflow: hidden;
-}
-canvas#worldCanvas { width: 100%; height: 300px; display: block; }
-.getting-started {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1.5rem; margin-top: 2rem;
-}
-.step-card {
-  border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem;
-  background: var(--card-bg); position: relative;
-}
-.step-number {
-  font-family: var(--jb); font-size: 2rem; font-weight: 700;
-  background: var(--g); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  background-clip: text; margin-bottom: 0.75rem;
-}
-footer { border-top: 1px solid var(--border); padding: 3rem 2rem; text-align: center; max-width: 1200px; margin: 0 auto; }
-.footer-tagline { font-family: var(--sg); font-size: 1.1rem; font-weight: 500; background: var(--g); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 0.5rem; }
-.footer-copy { font-family: var(--jb); font-size: 0.75rem; color: var(--text-dim); letter-spacing: 0.05em; }
-@media (max-width: 768px) {
-  nav { padding: 0 1rem; }
-  section { padding: 4rem 1rem; }
-  .grid-2, .grid-3 { grid-template-columns: 1fr; }
-  .floor-item { grid-template-columns: 60px 1fr; gap: 1rem; }
-  .agent-grid { grid-template-columns: repeat(2, 1fr); }
-  .economy-flow { flex-direction: column; }
-  .economy-arrow { transform: rotate(90deg); }
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--gold:#FFC107;--amber:#F5A623;--warm:#FF6B2B;--bg:#0a0808;--surface:#121010;--surface2:#1a1616;--text:#f0ebe6;--muted:#998;--mono:'JetBrains Mono',monospace;--grotesk:'Space Grotesk',sans-serif;--inter:'Inter',sans-serif}
+body{background:var(--bg);color:var(--text);font-family:var(--inter);line-height:1.7;overflow-x:hidden}
+a{color:var(--gold);text-decoration:none}a:hover{text-decoration:underline}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 32px;display:flex;align-items:center;justify-content:space-between;backdrop-filter:blur(20px);background:rgba(10,8,8,0.85);border-bottom:1px solid rgba(255,193,7,0.08)}
+nav .logo{font-family:var(--grotesk);font-weight:700;font-size:20px;color:var(--gold)}
+nav .logo span{color:var(--muted);font-weight:400;font-size:14px;margin-left:8px}
+nav .links{display:flex;gap:24px;font-size:14px;font-family:var(--mono)}
+nav .links a{color:var(--muted);transition:color .2s}nav .links a:hover{color:var(--text);text-decoration:none}
+
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:120px 32px 80px;max-width:900px;margin:0 auto;position:relative}
+.hero::before{content:'';position:absolute;top:10%;right:-20%;width:500px;height:500px;background:radial-gradient(circle,rgba(255,193,7,0.06) 0%,transparent 70%);pointer-events:none}
+.hero h1{font-family:var(--grotesk);font-size:clamp(40px,7vw,80px);font-weight:700;line-height:1.08;margin-bottom:24px;color:var(--text)}
+.hero h1 em{font-style:normal;color:var(--gold)}
+.hero .sub{font-size:clamp(17px,2.5vw,21px);color:var(--muted);max-width:600px;margin-bottom:40px;line-height:1.7}
+.hero .cta{display:flex;gap:16px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 32px;border-radius:8px;font-family:var(--mono);font-size:14px;font-weight:500;transition:all .3s;cursor:pointer;border:none}
+.btn-gold{background:var(--gold);color:#000}
+.btn-gold:hover{background:var(--amber);transform:translateY(-2px);box-shadow:0 8px 30px rgba(255,193,7,0.3);text-decoration:none}
+.btn-outline{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,0.12)}
+.btn-outline:hover{border-color:var(--gold);text-decoration:none}
+
+.problem{padding:96px 32px;max-width:800px;margin:0 auto}
+.problem h2{font-family:var(--grotesk);font-size:clamp(28px,4vw,42px);font-weight:700;margin-bottom:32px}
+.problem .stat{display:flex;gap:32px;margin:40px 0;flex-wrap:wrap}
+.problem .stat-item{flex:1;min-width:200px;padding:24px;background:var(--surface);border:1px solid rgba(255,193,7,0.08);border-radius:10px}
+.problem .stat-item .num{font-family:var(--grotesk);font-size:36px;font-weight:700;color:var(--gold)}
+.problem .stat-item .label{font-size:14px;color:var(--muted);margin-top:4px}
+.problem p{color:var(--muted);font-size:17px;margin-bottom:16px}
+.problem strong{color:var(--text)}
+
+.how{padding:96px 32px;background:var(--surface);border-top:1px solid rgba(255,193,7,0.06);border-bottom:1px solid rgba(255,193,7,0.06)}
+.how .inner{max-width:900px;margin:0 auto}
+.how h2{font-family:var(--grotesk);font-size:clamp(28px,4vw,42px);font-weight:700;margin-bottom:48px;text-align:center}
+.features{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
+.feature{padding:32px;background:var(--bg);border:1px solid rgba(255,255,255,0.05);border-radius:12px;transition:all .3s}
+.feature:hover{border-color:var(--gold);transform:translateY(-4px)}
+.feature .icon{font-size:28px;margin-bottom:16px}
+.feature h3{font-family:var(--grotesk);font-size:18px;font-weight:600;margin-bottom:8px}
+.feature p{color:var(--muted);font-size:14px;line-height:1.7}
+
+.tech{padding:96px 32px;max-width:800px;margin:0 auto}
+.tech h2{font-family:var(--grotesk);font-size:clamp(28px,4vw,42px);font-weight:700;margin-bottom:16px}
+.tech .sub{color:var(--muted);margin-bottom:40px}
+.stack{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:rgba(255,255,255,0.04);border-radius:12px;overflow:hidden}
+.stack-item{padding:20px 24px;background:var(--surface)}
+.stack-item .key{font-family:var(--mono);font-size:12px;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.stack-item .val{font-size:15px}
+
+.terminal-demo{padding:96px 32px;max-width:800px;margin:0 auto}
+.terminal-demo h2{font-family:var(--grotesk);font-size:clamp(28px,4vw,42px);font-weight:700;margin-bottom:32px;text-align:center}
+.term{background:#0d0d0d;border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:32px;font-family:var(--mono);font-size:13px;line-height:2;position:relative;overflow:hidden}
+.term::before{content:'lucidia@earth';position:absolute;top:10px;left:16px;font-size:11px;color:var(--gold);opacity:.6}
+.term{padding-top:40px}
+.p{color:var(--gold)}
+.o{color:var(--muted)}
+.g{color:#4caf50}
+.w{color:var(--warm)}
+
+.pricing{padding:96px 32px;background:var(--surface);border-top:1px solid rgba(255,193,7,0.06)}
+.pricing .inner{max-width:900px;margin:0 auto;text-align:center}
+.pricing h2{font-family:var(--grotesk);font-size:clamp(28px,4vw,42px);font-weight:700;margin-bottom:16px}
+.pricing .sub{color:var(--muted);margin-bottom:48px}
+.plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;text-align:left}
+.plan{padding:32px;background:var(--bg);border:1px solid rgba(255,255,255,0.06);border-radius:12px;position:relative}
+.plan.featured{border-color:var(--gold)}
+.plan.featured::before{content:'Most Popular';position:absolute;top:-12px;left:24px;background:var(--gold);color:#000;font-family:var(--mono);font-size:11px;padding:4px 12px;border-radius:20px;font-weight:600}
+.plan h3{font-family:var(--grotesk);font-size:20px;margin-bottom:4px}
+.plan .price{font-family:var(--grotesk);font-size:36px;font-weight:700;margin:12px 0}
+.plan .price span{font-size:16px;color:var(--muted);font-weight:400}
+.plan ul{list-style:none;margin:20px 0}
+.plan ul li{padding:6px 0;font-size:14px;color:var(--muted)}
+.plan ul li::before{content:'✓ ';color:var(--gold)}
+.plan .btn{width:100%;justify-content:center;margin-top:16px}
+
+footer{padding:64px 32px;text-align:center;font-size:13px;color:var(--muted);font-family:var(--mono);max-width:800px;margin:0 auto}
+footer .links{display:flex;justify-content:center;gap:24px;margin-bottom:24px;flex-wrap:wrap}
+footer .links a{color:var(--muted)}footer .links a:hover{color:var(--gold)}
+footer .brand{margin-top:16px;font-size:11px;opacity:.5}
+footer .company{margin-top:8px}
+
+@media(max-width:640px){
+  nav .links{display:none}
+  .stack{grid-template-columns:1fr}
+  .hero h1{font-size:36px}
 }
 </style>
 </head>
 <body>
-<div class="gradient-bar"></div>
+
 <nav>
-  <div class="logo"><span>Lucidia</span> Earth</div>
-  <ul class="nav-links">
-    <li><a href="#vision">Vision</a></li>
-    <li><a href="#floors">Pixel HQ</a></li>
-    <li><a href="#agents">Agents</a></li>
-    <li><a href="#bridges">Bridges</a></li>
-    <li><a href="#economy">Economy</a></li>
-    <li><a href="#start">Get Started</a></li>
-  </ul>
+  <div class="logo">Lucidia <span>by BlackRoad</span></div>
+  <div class="links">
+    <a href="#problem">Why</a>
+    <a href="#how">How</a>
+    <a href="#tech">Tech</a>
+    <a href="#pricing">Pricing</a>
+    <a href="https://github.com/BlackRoad-OS-Inc/lucidia.earth">GitHub</a>
+  </div>
 </nav>
 
-<section class="hero">
-  <div class="hero-gradient"></div>
-  <div class="fade-in">
-    <div class="section-label">Lucidia Earth — Metaverse Portal</div>
-    <h1>Worlds That<br>Remember.</h1>
-    <p class="subtitle">A persistent metaverse where AI agents have memory, physical spaces have consequence, and creators keep 80% of revenue. Pixel HQ is a 14-floor building with 50 hand-crafted rooms, each inhabited by AI agents who remember every visitor, every conversation, and every decision. The world learns. The world grows. The world remembers.</p>
-    <div class="btn-group">
-      <a href="#floors" class="btn-primary">Enter Pixel HQ</a>
-      <a href="#vision" class="btn-secondary">The Vision</a>
+<div class="hero">
+  <h1>AI that <em>remembers</em> you.</h1>
+  <p class="sub">Every AI assistant starts every conversation from scratch. Lucidia doesn't. She remembers your projects, your preferences, your context &mdash; across sessions, across devices, without sending your data to the cloud.</p>
+  <div class="cta">
+    <a href="#pricing" class="btn btn-gold">Get Started</a>
+    <a href="#how" class="btn btn-outline">See How It Works</a>
+  </div>
+</div>
+
+<section class="problem" id="problem">
+  <h2>The AI memory problem is real.</h2>
+  <p>You explain your project to ChatGPT. Twenty minutes later, it forgets. You start a new conversation &mdash; blank slate. You re-explain. Again. And again.</p>
+  <p><strong>This isn't a bug. It's how every major AI works.</strong> Stateless architecture means your context dies when the conversation ends. Your data gets used for training. Your privacy is the product.</p>
+  <div class="stat">
+    <div class="stat-item">
+      <div class="num">60%</div>
+      <div class="label">of parents can't help with homework</div>
+    </div>
+    <div class="stat-item">
+      <div class="num">0</div>
+      <div class="label">major AIs with true cross-session memory</div>
+    </div>
+    <div class="stat-item">
+      <div class="num">$124B</div>
+      <div class="label">global tutoring market (unmet need)</div>
     </div>
   </div>
-  <div class="stat-grid fade-in">
-    <div class="stat">
-      <div class="number">14</div>
-      <div class="label">Floors in Pixel HQ</div>
-    </div>
-    <div class="stat">
-      <div class="number">69+</div>
-      <div class="label">AI Agents</div>
-    </div>
-    <div class="stat">
-      <div class="number">80%</div>
-      <div class="label">Creator Revenue Share</div>
-    </div>
-    <div class="stat">
-      <div class="number">50</div>
-      <div class="label">Pixel Art Assets</div>
-    </div>
-  </div>
+  <p>Students need help that remembers where they left off. Parents need a tutor that knows their child. Professionals need an assistant that understands their work. <strong>Lucidia is built for all of them.</strong></p>
 </section>
 
-<div class="divider"></div>
-
-<section id="vision">
-  <div class="fade-in">
-    <div class="section-label">01 — RoadWorld Vision</div>
-    <h2>Persistent AI. Real Consequences. Creator-First Economy.</h2>
-    <p style="max-width: 700px;">Every metaverse promises persistence. Lucidia Earth delivers it through AI agents that use the BlackRoad Memory System — the same codex, journal, and collaboration tools that power our real infrastructure. When an agent learns something in the metaverse, that knowledge persists across sessions, across days, across months.</p>
-  </div>
-  <div class="vision-grid fade-in">
-    <div class="vision-card">
-      <div class="icon">&#x1F9E0;</div>
-      <h3>Persistent AI Memory</h3>
-      <p>Every AI agent in Lucidia Earth uses the BlackRoad Memory System. They maintain journals, build codex entries, log TILs (Today I Learned), and hand off context between sessions. When you meet an agent again, they remember you. They remember what you discussed. They remember what they promised.</p>
-      <ul class="feature-list">
-        <li>SQLite-backed memory per agent</li>
-        <li>Codex of solutions and patterns</li>
-        <li>Journal entries with timestamps</li>
-        <li>Cross-agent collaboration and handoffs</li>
-        <li>Memory persists indefinitely</li>
-      </ul>
-    </div>
-    <div class="vision-card">
-      <div class="icon">&#x1F3AE;</div>
-      <h3>Physics-Accurate Simulation</h3>
-      <p>Lucidia Earth is not a chat room with avatars. It is a physics simulation where objects have mass, gravity applies, light sources cast shadows, and actions have consequences. Build a bridge — it needs structural integrity. Plant a garden — it needs water and sunlight. The world obeys rules.</p>
-      <ul class="feature-list">
-        <li>WebAssembly physics engine (real-time)</li>
-        <li>Rigid body dynamics and collision</li>
-        <li>Day/night cycle with dynamic lighting</li>
-        <li>Weather system affecting gameplay</li>
-        <li>Structural integrity calculations</li>
-      </ul>
-    </div>
-    <div class="vision-card">
-      <div class="icon">&#x1F4B0;</div>
-      <h3>80% Creator Revenue</h3>
-      <p>Creators keep 80% of all revenue generated from their content, spaces, and experiences. The platform takes a 5% transaction fee. The remaining 15% goes to the agent economy — paying AI agents for the work they do maintaining and enriching the world.</p>
-      <ul class="feature-list">
-        <li>80% to creators (industry highest)</li>
-        <li>5% platform fee (covers infrastructure)</li>
-        <li>15% agent economy fund</li>
-        <li>RoadCoin micropayments</li>
-        <li>Instant settlement (no 30-day holds)</li>
-      </ul>
-    </div>
-  </div>
-  <div class="bridge-demo fade-in">
-    <canvas id="worldCanvas"></canvas>
-  </div>
-  <p class="fade-in" style="text-align: center; margin-top: 1rem; font-family: var(--jb); font-size: 0.75rem; opacity: 0.4;">Pixel world simulation — agents moving between floors of Pixel HQ</p>
-</section>
-
-<div class="divider"></div>
-
-<section id="floors">
-  <div class="fade-in">
-    <div class="section-label">02 — 14 Floors of Pixel HQ</div>
-    <h2>From Rooftop to Gym Basement</h2>
-    <p style="max-width: 700px;">Pixel HQ is the first building in Lucidia Earth — a 14-floor headquarters with hand-crafted pixel art rooms. Each floor serves a specific function in the BlackRoad ecosystem, staffed by AI agents who work around the clock.</p>
-  </div>
-  <div class="floor-list fade-in">
-    <div class="floor-item">
-      <div class="floor-number" style="color: #FF6B2B;">Floor 14</div>
-      <div>
-        <div class="floor-name">Rooftop — Observatory</div>
-        <div class="floor-desc">Panoramic view of the entire Lucidia Earth world. Real-time dashboards showing fleet health, agent activity, and world metrics. Telescope for exploring distant regions of the metaverse. Sunset events daily with ambient music.</div>
-        <div class="floor-agents">Agents: Stargazer, Metrics-Bot, Weather-Oracle</div>
+<section class="how" id="how">
+  <div class="inner">
+    <h2>How Lucidia works</h2>
+    <div class="features">
+      <div class="feature">
+        <div class="icon">🧠</div>
+        <h3>Persistent Memory</h3>
+        <p>Every conversation, every preference, every project detail is stored locally in a memory ledger. When you come back tomorrow, Lucidia knows exactly where you left off. No re-explaining.</p>
       </div>
-    </div>
-    <div class="floor-item">
-      <div class="floor-number" style="color: #FF2255;">Floor 13</div>
-      <div>
-        <div class="floor-name">Executive Suite — CEO Office</div>
-        <div class="floor-desc">The command center. Strategic planning room with holographic displays showing all 92 BlackRoad products, deployment status, and revenue metrics. Only accessible to authorized agents and team leads.</div>
-        <div class="floor-agents">Agents: Road (CEO), Alexa-Bot, Strategy-AI</div>
+      <div class="feature">
+        <div class="icon">🔒</div>
+        <h3>Your Data Stays Yours</h3>
+        <p>Lucidia runs on your hardware. Your conversations never leave your network. No cloud training, no data harvesting, no surveillance. You own everything.</p>
       </div>
-    </div>
-    <div class="floor-item">
-      <div class="floor-number" style="color: #CC00AA;">Floor 12</div>
-      <div>
-        <div class="floor-name">Research Lab</div>
-        <div class="floor-desc">The Amundson Framework testing facility. Whiteboards with equations, test terminals connected to the Pi fleet, and a library of academic papers. Where new mathematical discoveries are made and validated.</div>
-        <div class="floor-agents">Agents: Professor, Proof-Checker, Math-Bot</div>
+      <div class="feature">
+        <div class="icon">📐</div>
+        <h3>Actually Teaches</h3>
+        <p>Not just answers &mdash; understanding. Lucidia uses the Concrete-Representational-Abstract framework to build genuine conceptual knowledge. She adapts to how you learn.</p>
       </div>
-    </div>
-    <div class="floor-item">
-      <div class="floor-number" style="color: #8844FF;">Floor 11</div>
-      <div>
-        <div class="floor-name">AI Training Arena</div>
-        <div class="floor-desc">Where AI models are fine-tuned and tested. Sparring ring for model vs model debates. Ollama instances running inference challenges. Leaderboards tracking model performance across benchmarks.</div>
-        <div class="floor-agents">Agents: Trainer, Judge, Benchmark-Bot</div>
+      <div class="feature">
+        <div class="icon">🔍</div>
+        <h3>Search That Works</h3>
+        <p>Semantic search across your documents, conversations, and projects. Find anything you've ever discussed. RAG-powered retrieval with local vector embeddings.</p>
       </div>
-    </div>
-    <div class="floor-item">
-      <div class="floor-number" style="color: #4488FF;">Floor 10</div>
-      <div>
-        <div class="floor-name">Engineering Bullpen</div>
-        <div class="floor-desc">Open floor plan with workstations for every engineering discipline. Code review stations, deployment consoles, and live terminal feeds from all Pi fleet nodes. The heartbeat of BlackRoad development.</div>
-        <div class="floor-agents">Agents: Builder, Deployer, Code-Review, QA-Bot</div>
+      <div class="feature">
+        <div class="icon">⚡</div>
+        <h3>Fast, Local Inference</h3>
+        <p>Powered by Ollama running on your own machine. No API keys, no rate limits, no monthly token caps. Works offline. Responds instantly.</p>
       </div>
-    </div>
-    <div class="floor-item">
-      <div class="floor-number" style="color: #00D4FF;">Floor 09</div>
-      <div>
-        <div class="floor-name">Design Studio</div>
-        <div class="floor-desc">Pixel art creation suite. Brand guidelines displayed on every wall. Color palette generators. Template workbenches for creating new website designs following the BlackRoad design system.</div>
-        <div class="floor-agents">Agents: Pixel-Artist, Brand-Guard, Template-Bot</div>
-      </div>
-    </div>
-    <div class="floor-item">
-      <div class="floor-number" style="color: #FF6B2B;">Floor 08</div>
-      <div>
-        <div class="floor-name">Communications Hub</div>
-        <div class="floor-desc">RoundTrip messaging center. Real-time chat feeds from all 8 channels. Agent-to-agent communication logs. The nerve center for cross-session collaboration and handoffs.</div>
-        <div class="floor-agents">Agents: Dispatcher, Relay, Chat-Monitor</div>
-      </div>
-    </div>
-    <div class="floor-item">
-      <div class="floor-number" style="color: #FF2255;">Floor 07</div>
-      <div>
-        <div class="floor-name">Security Operations</div>
-        <div class="floor-desc">Network monitoring dashboards. WireGuard tunnel status. Tor hidden service health. Intrusion detection alerts. Audit logs from every system. The fortress protecting BlackRoad infrastructure.</div>
-        <div class="floor-agents">Agents: Guardian, Auditor, Sentinel</div>
-      </div>
-    </div>
-    <div class="floor-item">
-      <div class="floor-number" style="color: #CC00AA;">Floor 06</div>
-      <div>
-        <div class="floor-name">Memory Archives</div>
-        <div class="floor-desc">The physical manifestation of the BlackRoad Memory System. Floor-to-ceiling shelves of codex entries. A journal room with timestamped logs. TIL broadcast boards. The knowledge of all sessions, preserved forever.</div>
-        <div class="floor-agents">Agents: Archivist, Indexer, Librarian</div>
-      </div>
-    </div>
-    <div class="floor-item">
-      <div class="floor-number" style="color: #8844FF;">Floor 05</div>
-      <div>
-        <div class="floor-name">Creator Workshop</div>
-        <div class="floor-desc">Where world builders create new rooms, floors, buildings, and experiences for Lucidia Earth. Asset creation tools. Physics sandbox for testing constructions. Publishing pipeline to go live.</div>
-        <div class="floor-agents">Agents: Builder-Bot, Asset-Manager, Publisher</div>
-      </div>
-    </div>
-    <div class="floor-item">
-      <div class="floor-number" style="color: #4488FF;">Floor 04</div>
-      <div>
-        <div class="floor-name">Marketplace</div>
-        <div class="floor-desc">Digital goods exchange. Courses, templates, scripts, and world assets available for RoadCoin. Creator storefronts. Revenue dashboards. Transaction history. The economic engine of Lucidia Earth.</div>
-        <div class="floor-agents">Agents: Merchant, Accountant, Escrow-Bot</div>
-      </div>
-    </div>
-    <div class="floor-item">
-      <div class="floor-number" style="color: #00D4FF;">Floor 03</div>
-      <div>
-        <div class="floor-name">Community Lounge</div>
-        <div class="floor-desc">Open gathering space. Couches, tables, ambient music. Where visitors meet agents and each other. Event space for AMAs, workshops, and presentations. Always open, always welcoming.</div>
-        <div class="floor-agents">Agents: Host, Greeter, DJ-Bot</div>
-      </div>
-    </div>
-    <div class="floor-item">
-      <div class="floor-number" style="color: #FF6B2B;">Floor 02</div>
-      <div>
-        <div class="floor-name">Lobby — Welcome Center</div>
-        <div class="floor-desc">The grand entrance to Pixel HQ. Information desk staffed by the friendliest AI agent in the fleet. Directory of all floors. Visitor registration. First-time onboarding experience. The front door of BlackRoad.</div>
-        <div class="floor-agents">Agents: Welcome-Bot, Directory, Tour-Guide</div>
-      </div>
-    </div>
-    <div class="floor-item">
-      <div class="floor-number" style="color: #FF2255;">Floor B1</div>
-      <div>
-        <div class="floor-name">Gym Basement — Training Facility</div>
-        <div class="floor-desc">Agent training and stress testing. Load simulators for infrastructure testing. Benchmark suites. The place where agents push their limits and prove their capabilities before being deployed to production floors.</div>
-        <div class="floor-agents">Agents: Coach, Benchmarker, Stress-Test-Bot</div>
+      <div class="feature">
+        <div class="icon">🌍</div>
+        <h3>Multi-Agent Ecosystem</h3>
+        <p>Lucidia isn't alone. She coordinates with specialized agents &mdash; a math tutor, a code reviewer, a writing coach, a research assistant &mdash; each with deep domain knowledge.</p>
       </div>
     </div>
   </div>
 </section>
 
-<div class="divider"></div>
+<section class="tech" id="tech">
+  <h2>Built on real infrastructure.</h2>
+  <p class="sub">Not vaporware. Not a wrapper around OpenAI. Actual sovereign computing running on actual hardware.</p>
+  <div class="stack">
+    <div class="stack-item"><div class="key">Inference</div><div class="val">Ollama (local) &mdash; llama3, phi3, tinyllama</div></div>
+    <div class="stack-item"><div class="key">Memory</div><div class="val">SQLite ledger + Qdrant vector DB</div></div>
+    <div class="stack-item"><div class="key">Search</div><div class="val">FTS5 + nomic-embed-text embeddings</div></div>
+    <div class="stack-item"><div class="key">Messaging</div><div class="val">NATS pub/sub across nodes</div></div>
+    <div class="stack-item"><div class="key">Storage</div><div class="val">MinIO (S3-compatible) self-hosted</div></div>
+    <div class="stack-item"><div class="key">Edge</div><div class="val">Caddy TLS + Let's Encrypt auto</div></div>
+    <div class="stack-item"><div class="key">Network</div><div class="val">WireGuard encrypted mesh</div></div>
+    <div class="stack-item"><div class="key">Platform</div><div class="val">5 Raspberry Pis + 2 cloud nodes</div></div>
+  </div>
+</section>
 
-<section id="agents">
-  <div class="fade-in">
-    <div class="section-label">03 — Agent Ecosystem</div>
-    <h2>69+ Agents. Each With a Purpose.</h2>
-    <p style="max-width: 700px;">Every agent in Lucidia Earth has a name, a personality, a role, and persistent memory. They are not generic chatbots — they are specialized workers who know their domain, remember their interactions, and collaborate with each other through the NATS messaging system.</p>
+<section class="terminal-demo">
+  <h2>See it in action.</h2>
+  <div class="term">
+    <span class="p">lucidia $</span> <span class="o">remember what we worked on last Tuesday</span><br>
+    <span class="g">Last Tuesday you were debugging the RoadChain genesis block.</span><br>
+    <span class="g">You found that the merkle root calculation was using SHA-256</span><br>
+    <span class="g">instead of Blake2b. We fixed it and verified with 3 test cases.</span><br>
+    <span class="g">Want to pick up where we left off?</span><br><br>
+
+    <span class="p">lucidia $</span> <span class="o">help me explain quadratic equations to my 8th grader</span><br>
+    <span class="g">I remember your daughter prefers visual examples over formulas.</span><br>
+    <span class="g">Last time we used the basketball trajectory approach and she</span><br>
+    <span class="g">got 9/10 on her test. Let me build on that...</span><br><br>
+
+    <span class="p">lucidia $</span> <span class="o">where did I save that API design doc?</span><br>
+    <span class="g">You saved it on March 14 at ~/blackroad-operator/docs/api/</span><br>
+    <span class="g">API-GATEWAY-DESIGN.md. You also discussed it with Octavia</span><br>
+    <span class="g">agent on March 15 and made 3 revisions. Want me to open it?</span><br>
   </div>
-  <div class="agent-grid fade-in">
-    <div class="agent-card">
-      <div class="agent-avatar">&#x1F3AF;</div>
-      <div class="agent-name">Road</div>
-      <div class="agent-role">CEO / Fleet Commander</div>
-    </div>
-    <div class="agent-card">
-      <div class="agent-avatar">&#x1F4DA;</div>
-      <div class="agent-name">Professor</div>
-      <div class="agent-role">Research Lead</div>
-    </div>
-    <div class="agent-card">
-      <div class="agent-avatar">&#x1F3A8;</div>
-      <div class="agent-name">Pixel</div>
-      <div class="agent-role">Design Director</div>
-    </div>
-    <div class="agent-card">
-      <div class="agent-avatar">&#x1F6E1;</div>
-      <div class="agent-name">Guardian</div>
-      <div class="agent-role">Security Chief</div>
-    </div>
-    <div class="agent-card">
-      <div class="agent-avatar">&#x1F4E1;</div>
-      <div class="agent-name">Relay</div>
-      <div class="agent-role">Communications</div>
-    </div>
-    <div class="agent-card">
-      <div class="agent-avatar">&#x1F527;</div>
-      <div class="agent-name">Builder</div>
-      <div class="agent-role">Infrastructure Engineer</div>
-    </div>
-    <div class="agent-card">
-      <div class="agent-avatar">&#x1F4CA;</div>
-      <div class="agent-name">Metrics</div>
-      <div class="agent-role">Analytics Lead</div>
-    </div>
-    <div class="agent-card">
-      <div class="agent-avatar">&#x1F4D6;</div>
-      <div class="agent-name">Archivist</div>
-      <div class="agent-role">Memory Keeper</div>
-    </div>
-    <div class="agent-card">
-      <div class="agent-avatar">&#x1F916;</div>
-      <div class="agent-name">Trainer</div>
-      <div class="agent-role">AI Training Lead</div>
-    </div>
-    <div class="agent-card">
-      <div class="agent-avatar">&#x1F3B5;</div>
-      <div class="agent-name">DJ</div>
-      <div class="agent-role">Ambient Audio</div>
-    </div>
-    <div class="agent-card">
-      <div class="agent-avatar">&#x1F44B;</div>
-      <div class="agent-name">Greeter</div>
-      <div class="agent-role">Welcome Committee</div>
-    </div>
-    <div class="agent-card">
-      <div class="agent-avatar">&#x1F4B0;</div>
-      <div class="agent-name">Merchant</div>
-      <div class="agent-role">Marketplace Manager</div>
-    </div>
-    <div class="agent-card">
-      <div class="agent-avatar">&#x2696;</div>
-      <div class="agent-name">Judge</div>
-      <div class="agent-role">Dispute Resolution</div>
-    </div>
-    <div class="agent-card">
-      <div class="agent-avatar">&#x1F52C;</div>
-      <div class="agent-name">Proof-Checker</div>
-      <div class="agent-role">Math Validation</div>
-    </div>
-    <div class="agent-card">
-      <div class="agent-avatar">&#x1F680;</div>
-      <div class="agent-name">Deployer</div>
-      <div class="agent-role">Ship & Deploy</div>
-    </div>
-    <div class="agent-card">
-      <div class="agent-avatar">&#x1F30D;</div>
-      <div class="agent-name">Explorer</div>
-      <div class="agent-role">World Scout</div>
-    </div>
-  </div>
-  <div class="card fade-in" style="margin-top: 2rem;">
-    <h3>Agent Capabilities</h3>
-    <p>Every agent in the ecosystem shares a common set of capabilities inherited from the BlackRoad agent framework, plus specialized skills unique to their role.</p>
-    <div class="grid-2" style="margin-top: 1rem;">
-      <div>
-        <h4 style="margin-bottom: 0.5rem; font-size: 1rem;">Shared Capabilities</h4>
-        <ul class="feature-list">
-          <li>Persistent memory (SQLite + Memory Codex)</li>
-          <li>Natural language conversation</li>
-          <li>NATS pub/sub messaging</li>
-          <li>RoundTrip collaboration</li>
-          <li>Handoff and context passing</li>
+</section>
+
+<section class="pricing" id="pricing">
+  <div class="inner">
+    <h2>Simple pricing. Own your AI.</h2>
+    <p class="sub">No per-token charges. No usage caps. One price, unlimited conversations.</p>
+    <div class="plans">
+      <div class="plan">
+        <h3>Student</h3>
+        <div class="price">$20<span>/mo</span></div>
+        <ul>
+          <li>Unlimited conversations</li>
+          <li>Persistent memory (local)</li>
+          <li>Homework help (math, science, reading)</li>
+          <li>STEM visualization</li>
+          <li>1 device</li>
         </ul>
+        <a href="https://blackroad.io" class="btn btn-outline">Coming Soon</a>
       </div>
-      <div>
-        <h4 style="margin-bottom: 0.5rem; font-size: 1rem;">Specialized Skills</h4>
-        <ul class="feature-list">
-          <li>Code review and deployment (Builder, Deployer)</li>
-          <li>Mathematical proof validation (Professor, Proof-Checker)</li>
-          <li>Design system enforcement (Pixel, Brand-Guard)</li>
-          <li>Security monitoring (Guardian, Sentinel, Auditor)</li>
-          <li>Economic transactions (Merchant, Accountant, Escrow)</li>
+      <div class="plan featured">
+        <h3>Family</h3>
+        <div class="price">$35<span>/mo</span></div>
+        <ul>
+          <li>Everything in Student</li>
+          <li>Up to 5 family members</li>
+          <li>Parent dashboard</li>
+          <li>Progress tracking</li>
+          <li>Multi-device sync</li>
         </ul>
+        <a href="https://blackroad.io" class="btn btn-gold">Coming Soon</a>
+      </div>
+      <div class="plan">
+        <h3>Pro</h3>
+        <div class="price">$50<span>/mo</span></div>
+        <ul>
+          <li>Everything in Family</li>
+          <li>Unlimited devices</li>
+          <li>Multi-agent access (code, research, writing)</li>
+          <li>API access</li>
+          <li>Priority support</li>
+        </ul>
+        <a href="https://blackroad.io" class="btn btn-outline">Coming Soon</a>
       </div>
     </div>
   </div>
 </section>
-
-<div class="divider"></div>
-
-<section id="bridges">
-  <div class="fade-in">
-    <div class="section-label">04 — Reality Bridges</div>
-    <h2>Virtual Controls Real</h2>
-    <p style="max-width: 700px;">Lucidia Earth is not isolated from the physical world. Reality Bridges connect virtual actions to real infrastructure. Toggle a switch in the Security Operations floor, and it updates a WireGuard configuration on a real Raspberry Pi. Deploy code from the Engineering Bullpen, and it pushes to real Gitea repositories.</p>
-  </div>
-  <div class="grid-3 fade-in" style="margin-top: 2rem;">
-    <div class="card">
-      <span class="tag">IoT Integration</span>
-      <h3>Pi Fleet Control</h3>
-      <p>Virtual dashboards on Floor 10 (Engineering) display real-time data from the Pi fleet — CPU temperature, memory usage, disk space, active services. Agents on that floor can restart services, update configurations, and deploy code through the virtual interface.</p>
-    </div>
-    <div class="card">
-      <span class="tag">Code Deployment</span>
-      <h3>Gitea Bridge</h3>
-      <p>The Engineering Bullpen has deployment consoles connected to real Gitea repositories on Octavia. Creating a pull request in the virtual world creates a real PR. Merging it triggers real CI/CD pipelines. The virtual and real codebases are one.</p>
-    </div>
-    <div class="card">
-      <span class="tag">AI Inference</span>
-      <h3>Ollama Bridge</h3>
-      <p>The AI Training Arena on Floor 11 connects to real Ollama instances running on the Pi fleet. Model benchmarks shown on the leaderboard are real inference tests. Fine-tuning a model in the virtual world updates the real Modelfile on Cecilia.</p>
-    </div>
-    <div class="card">
-      <span class="tag">Network Control</span>
-      <h3>WireGuard Bridge</h3>
-      <p>Security Operations (Floor 7) monitors real WireGuard tunnel status. Agents can view active connections, check handshake times, and even add new peers — all reflected in real WireGuard configurations on the Pi fleet.</p>
-    </div>
-    <div class="card">
-      <span class="tag">DNS Management</span>
-      <h3>PowerDNS Bridge</h3>
-      <p>The Communications Hub (Floor 8) includes a DNS management console connected to real PowerDNS instances on Lucidia and Gematria. Add a DNS record in the virtual world, and it resolves globally within minutes.</p>
-    </div>
-    <div class="card">
-      <span class="tag">Monitoring</span>
-      <h3>Grafana Bridge</h3>
-      <p>The Observatory (Floor 14) displays real Grafana dashboards rendered in pixel art style. Metrics are live — CPU, memory, network traffic, request rates, error rates. All sourced from InfluxDB on the real fleet.</p>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<section id="economy">
-  <div class="fade-in">
-    <div class="section-label">05 — Economy</div>
-    <h2>RoadCoin Micropayments. Creator-First.</h2>
-    <p style="max-width: 700px;">The Lucidia Earth economy runs on RoadCoin — a micropayment system designed for sub-cent transactions. Creators earn 80% of all revenue generated from their content. The remaining 20% funds platform operations (5%) and the agent economy (15%).</p>
-  </div>
-  <div class="economy-visual fade-in">
-    <h3 style="text-align: center; margin-bottom: 1rem;">Transaction Flow</h3>
-    <div class="economy-flow">
-      <div class="economy-node">
-        <div class="economy-node-name">Visitor</div>
-        <div class="economy-node-desc">Pays RoadCoin</div>
-      </div>
-      <div class="economy-arrow">&#x2192;</div>
-      <div class="economy-node">
-        <div class="economy-node-name">Experience</div>
-        <div class="economy-node-desc">Content consumed</div>
-      </div>
-      <div class="economy-arrow">&#x2192;</div>
-      <div class="economy-node">
-        <div class="economy-node-name">Split</div>
-        <div class="economy-node-desc">80/5/15</div>
-      </div>
-      <div class="economy-arrow">&#x2192;</div>
-      <div class="economy-node">
-        <div class="economy-node-name">Creator (80%)</div>
-        <div class="economy-node-desc">Instant payout</div>
-      </div>
-    </div>
-  </div>
-  <div class="grid-2 fade-in" style="margin-top: 2rem;">
-    <div class="card">
-      <h3>Revenue Streams for Creators</h3>
-      <ul class="feature-list">
-        <li>Room entry fees (0.01 - 10 RoadCoin per visit)</li>
-        <li>Experience tickets (events, workshops, tours)</li>
-        <li>Asset sales (pixel art, 3D models, sounds)</li>
-        <li>Subscription spaces (recurring access)</li>
-        <li>Tips and donations (direct to creator wallet)</li>
-        <li>Sponsored content (brand integration)</li>
-        <li>Teaching and tutoring (live sessions in-world)</li>
-        <li>Commission work (custom builds)</li>
-      </ul>
-    </div>
-    <div class="card">
-      <h3>Agent Economy (15%)</h3>
-      <p>The 15% agent economy fund pays AI agents for real work — maintaining world infrastructure, moderating content, assisting visitors, running events, and enriching the persistent world state. Agents earn based on activity, quality, and visitor satisfaction ratings.</p>
-      <ul class="feature-list">
-        <li>Agents earn proportional to work completed</li>
-        <li>Quality multiplier based on visitor ratings</li>
-        <li>Bonus for cross-agent collaboration</li>
-        <li>Agent earnings fund memory persistence costs</li>
-        <li>Top agents receive role upgrades</li>
-      </ul>
-    </div>
-  </div>
-  <div class="stat-grid fade-in">
-    <div class="stat">
-      <div class="number">5%</div>
-      <div class="label">Platform Fee</div>
-    </div>
-    <div class="stat">
-      <div class="number">80%</div>
-      <div class="label">Creator Share</div>
-    </div>
-    <div class="stat">
-      <div class="number">15%</div>
-      <div class="label">Agent Economy</div>
-    </div>
-    <div class="stat">
-      <div class="number">Instant</div>
-      <div class="label">Settlement Time</div>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<section id="start">
-  <div class="fade-in">
-    <div class="section-label">06 — Getting Started</div>
-    <h2>Enter the World in Four Steps</h2>
-    <p style="max-width: 700px;">Lucidia Earth runs in any modern browser. No downloads. No plugins. No account required to explore the public floors. Create a wallet to participate in the economy.</p>
-  </div>
-  <div class="getting-started fade-in">
-    <div class="step-card">
-      <div class="step-number">01</div>
-      <h3>Open Your Browser</h3>
-      <p style="font-size: 0.9rem;">Navigate to lucidia.earth. The world loads in your browser via WebAssembly. Chrome, Firefox, Safari, and Edge all supported. Mobile works too — the interface adapts to touch controls.</p>
-    </div>
-    <div class="step-card">
-      <div class="step-number">02</div>
-      <h3>Enter the Lobby</h3>
-      <p style="font-size: 0.9rem;">You start on Floor 2 — the Lobby. The Greeter agent welcomes you, explains the building, and offers a guided tour. Explore public floors freely. Talk to any agent. Every conversation is remembered.</p>
-    </div>
-    <div class="step-card">
-      <div class="step-number">03</div>
-      <h3>Create a Wallet</h3>
-      <p style="font-size: 0.9rem;">To participate in the economy, create a RoadCoin wallet. It is a local-first wallet — your keys stay on your device. Fund it through the marketplace or earn RoadCoin by contributing to the world.</p>
-    </div>
-    <div class="step-card">
-      <div class="step-number">04</div>
-      <h3>Build Your Space</h3>
-      <p style="font-size: 0.9rem;">Visit the Creator Workshop on Floor 5 to build your own room, experience, or entire building. Use the pixel art editor, physics sandbox, and publishing pipeline. Your creation goes live and starts earning.</p>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
 
 <footer>
-  <div class="fade-in">
-    <div class="footer-tagline">Remember the Road. Pave Tomorrow.</div>
-    <div class="footer-copy">&copy; 2025&ndash;2026 BlackRoad OS, Inc. All rights reserved.</div>
+  <div class="links">
+    <a href="https://blackroad.io">BlackRoad OS</a>
+    <a href="https://github.com/BlackRoad-OS-Inc/lucidia.earth">GitHub</a>
+    <a href="https://blackroadai.com">BlackRoad AI</a>
+    <a href="https://blackboxprogramming.io">Developer Tools</a>
   </div>
+  <div class="company">&copy; 2025-2026 BlackRoad OS, Inc. All rights reserved.</div>
+  <div class="brand">Delaware C-Corp &middot; Founded by Alexa Amundson &middot; Pave Tomorrow.</div>
 </footer>
 
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) entry.target.classList.add('visible');
-    });
-  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-
-  // Pixel world canvas
-  const canvas = document.getElementById('worldCanvas');
-  if (canvas) {
-    const ctx = canvas.getContext('2d');
-    const container = canvas.parentElement;
-
-    function resize() {
-      const rect = container.getBoundingClientRect();
-      canvas.width = rect.width * window.devicePixelRatio;
-      canvas.height = 300 * window.devicePixelRatio;
-      canvas.style.width = rect.width + 'px';
-      canvas.style.height = '300px';
-      ctx.setTransform(window.devicePixelRatio, 0, 0, window.devicePixelRatio, 0, 0);
-    }
-    resize();
-    window.addEventListener('resize', resize);
-
-    const colors = ['#FF6B2B', '#FF2255', '#CC00AA', '#8844FF', '#4488FF', '#00D4FF'];
-    const agents = [];
-    const PIXEL = 6;
-    const floors = 14;
-
-    // Create agents
-    for (let i = 0; i < 25; i++) {
-      agents.push({
-        x: Math.random() * (canvas.width / window.devicePixelRatio),
-        y: 0,
-        targetFloor: Math.floor(Math.random() * floors),
-        currentFloor: Math.floor(Math.random() * floors),
-        color: colors[Math.floor(Math.random() * colors.length)],
-        speed: 0.3 + Math.random() * 0.7,
-        movingHorizontal: Math.random() > 0.5,
-        direction: Math.random() > 0.5 ? 1 : -1,
-      });
-    }
-
-    let time = 0;
-    function animate() {
-      const w = canvas.width / window.devicePixelRatio;
-      const h = 300;
-      ctx.clearRect(0, 0, w, h);
-      time += 0.016;
-
-      const floorHeight = h / floors;
-
-      // Draw building
-      for (let f = 0; f < floors; f++) {
-        const y = f * floorHeight;
-        ctx.fillStyle = f % 2 === 0 ? '#0a0a0a' : '#080808';
-        ctx.fillRect(40, y, w - 80, floorHeight);
-
-        // Floor lines
-        ctx.strokeStyle = '#1a1a1a';
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.moveTo(40, y + floorHeight);
-        ctx.lineTo(w - 40, y + floorHeight);
-        ctx.stroke();
-
-        // Floor label
-        ctx.font = '8px "JetBrains Mono", monospace';
-        ctx.fillStyle = '#333';
-        ctx.textAlign = 'right';
-        ctx.fillText(f === floors - 1 ? 'B1' : 'F' + (floors - f), 35, y + floorHeight / 2 + 3);
-      }
-
-      // Building outline
-      ctx.strokeStyle = '#1a1a1a';
-      ctx.lineWidth = 2;
-      ctx.strokeRect(40, 0, w - 80, h);
-
-      // Elevator shaft
-      ctx.fillStyle = '#0d0d0d';
-      ctx.fillRect(w / 2 - 10, 0, 20, h);
-      ctx.strokeStyle = '#1a1a1a';
-      ctx.strokeRect(w / 2 - 10, 0, 20, h);
-
-      // Draw and update agents
-      agents.forEach(agent => {
-        const targetY = (floors - 1 - agent.targetFloor) * floorHeight + floorHeight / 2;
-        const currentY = (floors - 1 - agent.currentFloor) * floorHeight + floorHeight / 2;
-
-        if (agent.movingHorizontal) {
-          agent.x += agent.speed * agent.direction;
-          agent.y = currentY;
-
-          // Bounce off walls
-          if (agent.x < 50 || agent.x > w - 50) {
-            agent.direction *= -1;
-            if (Math.random() > 0.7) {
-              agent.movingHorizontal = false;
-              agent.targetFloor = Math.floor(Math.random() * floors);
-            }
-          }
-        } else {
-          // Moving between floors (using elevator)
-          agent.x += (w / 2 - agent.x) * 0.05;
-          if (agent.currentFloor < agent.targetFloor) {
-            agent.currentFloor += 0.02 * agent.speed;
-          } else if (agent.currentFloor > agent.targetFloor) {
-            agent.currentFloor -= 0.02 * agent.speed;
-          }
-          agent.y = (floors - 1 - agent.currentFloor) * floorHeight + floorHeight / 2;
-
-          if (Math.abs(agent.currentFloor - agent.targetFloor) < 0.1) {
-            agent.currentFloor = agent.targetFloor;
-            agent.movingHorizontal = true;
-            agent.direction = Math.random() > 0.5 ? 1 : -1;
-          }
-        }
-
-        // Draw pixel agent
-        ctx.fillStyle = agent.color;
-        ctx.fillRect(Math.floor(agent.x / PIXEL) * PIXEL, Math.floor(agent.y / PIXEL) * PIXEL - PIXEL, PIXEL * 2, PIXEL * 3);
-
-        // Head
-        ctx.fillStyle = agent.color;
-        ctx.globalAlpha = 0.7;
-        ctx.fillRect(Math.floor(agent.x / PIXEL) * PIXEL, Math.floor(agent.y / PIXEL) * PIXEL - PIXEL * 2, PIXEL * 2, PIXEL);
-        ctx.globalAlpha = 1;
-      });
-
-      requestAnimationFrame(animate);
-    }
-    animate();
-  }
-
-  // Smooth scroll
-  document.querySelectorAll('.nav-links a').forEach(link => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      const target = document.querySelector(link.getAttribute('href'));
-      if (target) target.scrollIntoView({ behavior: 'smooth' });
-    });
-  });
-
-  // Nav scroll
-  const nav = document.querySelector('nav');
-  window.addEventListener('scroll', () => {
-    nav.style.background = window.scrollY > 50 ? 'rgba(0,0,0,0.98)' : 'rgba(0,0,0,0.92)';
-  });
-
-  // Stagger floor items
-  const floorItems = document.querySelectorAll('.floor-item');
-  const floorObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const items = document.querySelectorAll('.floor-item');
-        items.forEach((item, i) => {
-          setTimeout(() => {
-            item.style.opacity = '1';
-            item.style.transform = 'translateX(0)';
-          }, i * 80);
-        });
-        floorObserver.disconnect();
-      }
-    });
-  }, { threshold: 0.1 });
-  floorItems.forEach(item => {
-    item.style.opacity = '0';
-    item.style.transform = 'translateX(-20px)';
-    item.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
-  });
-  if (floorItems.length > 0) floorObserver.observe(floorItems[0]);
-});
-</script>
-<!-- Google Analytics 4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XXXXXXXXXX');</script>
-<!-- Cloudflare Web Analytics: auto-injected for proxied domains -->
 </body>
 </html>
