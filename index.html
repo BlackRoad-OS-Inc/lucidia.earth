@@ -4,279 +4,164 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Lucidia — AI That Remembers You</title>
-<meta name="description" content="Lucidia is an AI companion with persistent memory. She runs on your hardware, remembers every conversation, and never sends your data to the cloud. Built by BlackRoad OS, Inc.">
+<meta name="description" content="Lucidia is an AI companion that remembers every conversation, learns your context, and runs on your own hardware. No cloud dependency. No data harvesting. Just intelligence that grows with you.">
 <meta property="og:title" content="Lucidia — AI That Remembers You">
-<meta property="og:description" content="AI with persistent memory across every device, every session, every agent. She runs on your hardware. She remembers who you are.">
-<meta property="og:type" content="website">
+<meta property="og:description" content="An AI companion with persistent memory, running on sovereign hardware. No cloud. No tracking. No forgetting.">
 <meta property="og:url" content="https://lucidia.earth">
-<meta property="og:image" content="https://images.blackroad.io/pixel-art/road-logo.png">
+<meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="canonical" href="https://lucidia.earth">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💡</text></svg>">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--gold:#FFC107;--amber:#F5A623;--warm:#FF6B2B;--bg:#0a0808;--surface:#121010;--surface2:#1a1616;--text:#f0ebe6;--muted:#998;--mono:'JetBrains Mono',monospace;--grotesk:'Space Grotesk',sans-serif;--inter:'Inter',sans-serif}
-body{background:var(--bg);color:var(--text);font-family:var(--inter);line-height:1.7;overflow-x:hidden}
-a{color:var(--gold);text-decoration:none}a:hover{text-decoration:underline}
+html{-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+:root{--bg:#000;--card:#0a0a0a;--border:#1a1a1a;--text:#f5f5f5;--sub:#737373;--sg:'Space Grotesk',sans-serif;--jb:'JetBrains Mono',monospace;--in:'Inter',sans-serif;--g:linear-gradient(90deg,#FF6B2B,#FF2255,#CC00AA,#8844FF,#4488FF,#00D4FF)}
+body{background:var(--bg);color:var(--text);font-family:var(--sg)}
 
-nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 32px;display:flex;align-items:center;justify-content:space-between;backdrop-filter:blur(20px);background:rgba(10,8,8,0.85);border-bottom:1px solid rgba(255,193,7,0.08)}
-nav .logo{font-family:var(--grotesk);font-weight:700;font-size:20px;color:var(--gold)}
-nav .logo span{color:var(--muted);font-weight:400;font-size:14px;margin-left:8px}
-nav .links{display:flex;gap:24px;font-size:14px;font-family:var(--mono)}
-nav .links a{color:var(--muted);transition:color .2s}nav .links a:hover{color:var(--text);text-decoration:none}
+@keyframes barPulse{0%,100%{opacity:1;transform:scaleY(1)}50%{opacity:.5;transform:scaleY(.7)}}
+.br-bars{display:flex;gap:2px;align-items:center}
+.br-bars span{width:3px;height:18px;border-radius:2px;display:inline-block}
+.br-bars span:nth-child(1){background:#FF6B2B;animation:barPulse 2.5s ease-in-out 0s infinite}
+.br-bars span:nth-child(2){background:#FF2255;animation:barPulse 2.5s ease-in-out .15s infinite}
+.br-bars span:nth-child(3){background:#CC00AA;animation:barPulse 2.5s ease-in-out .3s infinite}
+.br-bars span:nth-child(4){background:#8844FF;animation:barPulse 2.5s ease-in-out .45s infinite}
+.br-bars span:nth-child(5){background:#4488FF;animation:barPulse 2.5s ease-in-out .6s infinite}
+.br-bars span:nth-child(6){background:#00D4FF;animation:barPulse 2.5s ease-in-out .75s infinite}
 
-.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:120px 32px 80px;max-width:900px;margin:0 auto;position:relative}
-.hero::before{content:'';position:absolute;top:10%;right:-20%;width:500px;height:500px;background:radial-gradient(circle,rgba(255,193,7,0.06) 0%,transparent 70%);pointer-events:none}
-.hero h1{font-family:var(--grotesk);font-size:clamp(40px,7vw,80px);font-weight:700;line-height:1.08;margin-bottom:24px;color:var(--text)}
-.hero h1 em{font-style:normal;color:var(--gold)}
-.hero .sub{font-size:clamp(17px,2.5vw,21px);color:var(--muted);max-width:600px;margin-bottom:40px;line-height:1.7}
-.hero .cta{display:flex;gap:16px;flex-wrap:wrap}
-.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 32px;border-radius:8px;font-family:var(--mono);font-size:14px;font-weight:500;transition:all .3s;cursor:pointer;border:none}
-.btn-gold{background:var(--gold);color:#000}
-.btn-gold:hover{background:var(--amber);transform:translateY(-2px);box-shadow:0 8px 30px rgba(255,193,7,0.3);text-decoration:none}
-.btn-outline{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,0.12)}
-.btn-outline:hover{border-color:var(--gold);text-decoration:none}
+.grad-bar{height:4px;background:var(--g)}
+nav{display:flex;align-items:center;justify-content:space-between;padding:16px 48px;border-bottom:1px solid var(--border)}
+.nav-logo{font-weight:700;font-size:20px;display:flex;align-items:center;gap:10px}
+.nav-links{display:flex;gap:32px}
+.nav-links a{font-size:14px;font-weight:500;opacity:.5;transition:opacity .2s;text-decoration:none;color:var(--text)}
+.nav-links a:hover{opacity:1}
 
-.problem{padding:96px 32px;max-width:800px;margin:0 auto}
-.problem h2{font-family:var(--grotesk);font-size:clamp(28px,4vw,42px);font-weight:700;margin-bottom:32px}
-.problem .stat{display:flex;gap:32px;margin:40px 0;flex-wrap:wrap}
-.problem .stat-item{flex:1;min-width:200px;padding:24px;background:var(--surface);border:1px solid rgba(255,193,7,0.08);border-radius:10px}
-.problem .stat-item .num{font-family:var(--grotesk);font-size:36px;font-weight:700;color:var(--gold)}
-.problem .stat-item .label{font-size:14px;color:var(--muted);margin-top:4px}
-.problem p{color:var(--muted);font-size:17px;margin-bottom:16px}
-.problem strong{color:var(--text)}
+.hero{text-align:center;padding:100px 48px 80px;position:relative}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border:1px solid var(--border);border-radius:20px;font-size:12px;font-weight:500;margin-bottom:32px}
+.hero-badge-dot{width:8px;height:8px;border-radius:50%;background:#00D4FF;animation:barPulse 2s ease-in-out infinite}
+.hero h1{font-size:64px;font-weight:700;line-height:1.05;margin-bottom:24px;max-width:700px;margin-left:auto;margin-right:auto;letter-spacing:-0.03em}
+.hero p{font-size:18px;opacity:.5;max-width:520px;margin:0 auto 48px;line-height:1.7;font-family:var(--in)}
+.hero-cta{display:flex;gap:16px;justify-content:center}
+.btn-primary{padding:14px 36px;border:none;border-radius:8px;background:var(--text);color:var(--bg);font-size:15px;font-weight:600;cursor:pointer;font-family:var(--sg)}
+.btn-ghost{padding:14px 36px;border:1px solid var(--border);border-radius:8px;background:transparent;color:var(--text);font-size:15px;font-weight:600;cursor:pointer;font-family:var(--sg);transition:border-color .2s}
+.btn-ghost:hover{border-color:#444}
 
-.how{padding:96px 32px;background:var(--surface);border-top:1px solid rgba(255,193,7,0.06);border-bottom:1px solid rgba(255,193,7,0.06)}
-.how .inner{max-width:900px;margin:0 auto}
-.how h2{font-family:var(--grotesk);font-size:clamp(28px,4vw,42px);font-weight:700;margin-bottom:48px;text-align:center}
-.features{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
-.feature{padding:32px;background:var(--bg);border:1px solid rgba(255,255,255,0.05);border-radius:12px;transition:all .3s}
-.feature:hover{border-color:var(--gold);transform:translateY(-4px)}
-.feature .icon{font-size:28px;margin-bottom:16px}
-.feature h3{font-family:var(--grotesk);font-size:18px;font-weight:600;margin-bottom:8px}
-.feature p{color:var(--muted);font-size:14px;line-height:1.7}
+.problems{padding:80px 48px;max-width:900px;margin:0 auto}
+.problems h2{font-size:36px;font-weight:700;text-align:center;margin-bottom:12px}
+.problems .sub{text-align:center;font-size:15px;opacity:.4;margin-bottom:64px;font-family:var(--in)}
+.problem-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.problem-card{border:1px solid var(--border);border-radius:12px;padding:32px}
+.problem-card h3{font-size:16px;font-weight:600;margin-bottom:8px}
+.problem-card p{font-size:13px;opacity:.4;line-height:1.7;font-family:var(--in)}
+.problem-card .stat{font-family:var(--jb);font-size:28px;font-weight:700;margin-bottom:16px;background:var(--g);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 
-.tech{padding:96px 32px;max-width:800px;margin:0 auto}
-.tech h2{font-family:var(--grotesk);font-size:clamp(28px,4vw,42px);font-weight:700;margin-bottom:16px}
-.tech .sub{color:var(--muted);margin-bottom:40px}
-.stack{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:rgba(255,255,255,0.04);border-radius:12px;overflow:hidden}
-.stack-item{padding:20px 24px;background:var(--surface)}
-.stack-item .key{font-family:var(--mono);font-size:12px;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
-.stack-item .val{font-size:15px}
+.how{padding:80px 48px;border-top:1px solid var(--border);max-width:900px;margin:0 auto}
+.how h2{font-size:36px;font-weight:700;text-align:center;margin-bottom:64px}
+.how-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+.how-card{border:1px solid var(--border);border-radius:12px;padding:32px;position:relative;overflow:hidden}
+.how-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--g)}
+.how-card h3{font-size:18px;font-weight:600;margin-bottom:12px}
+.how-card p{font-size:14px;opacity:.4;line-height:1.7;font-family:var(--in)}
+.how-card .mono{font-family:var(--jb);font-size:11px;opacity:.3;margin-top:16px}
 
-.terminal-demo{padding:96px 32px;max-width:800px;margin:0 auto}
-.terminal-demo h2{font-family:var(--grotesk);font-size:clamp(28px,4vw,42px);font-weight:700;margin-bottom:32px;text-align:center}
-.term{background:#0d0d0d;border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:32px;font-family:var(--mono);font-size:13px;line-height:2;position:relative;overflow:hidden}
-.term::before{content:'lucidia@earth';position:absolute;top:10px;left:16px;font-size:11px;color:var(--gold);opacity:.6}
-.term{padding-top:40px}
-.p{color:var(--gold)}
-.o{color:var(--muted)}
-.g{color:#4caf50}
-.w{color:var(--warm)}
+.cta-section{padding:80px 48px;text-align:center}
+.cta-box{max-width:600px;margin:0 auto;padding:64px;border:1px solid var(--border);border-radius:16px;position:relative;overflow:hidden}
+.cta-box::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--g)}
+.cta-box h2{font-size:32px;font-weight:700;margin-bottom:12px}
+.cta-box p{font-size:14px;opacity:.4;margin-bottom:32px;font-family:var(--in)}
 
-.pricing{padding:96px 32px;background:var(--surface);border-top:1px solid rgba(255,193,7,0.06)}
-.pricing .inner{max-width:900px;margin:0 auto;text-align:center}
-.pricing h2{font-family:var(--grotesk);font-size:clamp(28px,4vw,42px);font-weight:700;margin-bottom:16px}
-.pricing .sub{color:var(--muted);margin-bottom:48px}
-.plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;text-align:left}
-.plan{padding:32px;background:var(--bg);border:1px solid rgba(255,255,255,0.06);border-radius:12px;position:relative}
-.plan.featured{border-color:var(--gold)}
-.plan.featured::before{content:'Most Popular';position:absolute;top:-12px;left:24px;background:var(--gold);color:#000;font-family:var(--mono);font-size:11px;padding:4px 12px;border-radius:20px;font-weight:600}
-.plan h3{font-family:var(--grotesk);font-size:20px;margin-bottom:4px}
-.plan .price{font-family:var(--grotesk);font-size:36px;font-weight:700;margin:12px 0}
-.plan .price span{font-size:16px;color:var(--muted);font-weight:400}
-.plan ul{list-style:none;margin:20px 0}
-.plan ul li{padding:6px 0;font-size:14px;color:var(--muted)}
-.plan ul li::before{content:'✓ ';color:var(--gold)}
-.plan .btn{width:100%;justify-content:center;margin-top:16px}
+footer{padding:48px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+footer .left{font-family:var(--jb);font-size:11px;opacity:.3}
+footer .right{font-family:var(--jb);font-size:11px;opacity:.2}
 
-footer{padding:64px 32px;text-align:center;font-size:13px;color:var(--muted);font-family:var(--mono);max-width:800px;margin:0 auto}
-footer .links{display:flex;justify-content:center;gap:24px;margin-bottom:24px;flex-wrap:wrap}
-footer .links a{color:var(--muted)}footer .links a:hover{color:var(--gold)}
-footer .brand{margin-top:16px;font-size:11px;opacity:.5}
-footer .company{margin-top:8px}
-
-@media(max-width:640px){
-  nav .links{display:none}
-  .stack{grid-template-columns:1fr}
+@media(max-width:768px){
+  nav{padding:16px 20px}
+  .hero{padding:60px 20px}
   .hero h1{font-size:36px}
+  .problem-grid,.how-grid{grid-template-columns:1fr}
+  .problems,.how{padding:60px 20px}
 }
 </style>
 </head>
 <body>
-
+<div class="grad-bar"></div>
 <nav>
-  <div class="logo">Lucidia <span>by BlackRoad</span></div>
-  <div class="links">
-    <a href="#problem">Why</a>
+  <div class="nav-logo"><div class="br-bars"><span></span><span></span><span></span><span></span><span></span><span></span></div> Lucidia</div>
+  <div class="nav-links">
+    <a href="#problem">Problem</a>
     <a href="#how">How</a>
-    <a href="#tech">Tech</a>
-    <a href="#pricing">Pricing</a>
-    <a href="https://github.com/BlackRoad-OS-Inc/lucidia.earth">GitHub</a>
+    <a href="https://blackroad.io">BlackRoad OS</a>
   </div>
 </nav>
 
-<div class="hero">
-  <h1>AI that <em>remembers</em> you.</h1>
-  <p class="sub">Every AI assistant starts every conversation from scratch. Lucidia doesn't. She remembers your projects, your preferences, your context &mdash; across sessions, across devices, without sending your data to the cloud.</p>
-  <div class="cta">
-    <a href="#pricing" class="btn btn-gold">Get Started</a>
-    <a href="#how" class="btn btn-outline">See How It Works</a>
+<section class="hero">
+  <div class="hero-badge"><div class="hero-badge-dot"></div> AI companion with persistent memory</div>
+  <h1>AI that remembers you.</h1>
+  <p>Every other AI assistant forgets you the moment the conversation ends. Lucidia remembers every interaction, learns your context, and runs on hardware you own. No cloud dependency. No data harvesting.</p>
+  <div class="hero-cta">
+    <button class="btn-primary" onclick="window.location='https://blackroad.io'">Learn More</button>
+    <button class="btn-ghost" onclick="window.location='https://github.com/BlackRoad-OS-Inc/lucidia'">View Source</button>
   </div>
-</div>
-
-<section class="problem" id="problem">
-  <h2>The AI memory problem is real.</h2>
-  <p>You explain your project to ChatGPT. Twenty minutes later, it forgets. You start a new conversation &mdash; blank slate. You re-explain. Again. And again.</p>
-  <p><strong>This isn't a bug. It's how every major AI works.</strong> Stateless architecture means your context dies when the conversation ends. Your data gets used for training. Your privacy is the product.</p>
-  <div class="stat">
-    <div class="stat-item">
-      <div class="num">60%</div>
-      <div class="label">of parents can't help with homework</div>
-    </div>
-    <div class="stat-item">
-      <div class="num">0</div>
-      <div class="label">major AIs with true cross-session memory</div>
-    </div>
-    <div class="stat-item">
-      <div class="num">$124B</div>
-      <div class="label">global tutoring market (unmet need)</div>
-    </div>
-  </div>
-  <p>Students need help that remembers where they left off. Parents need a tutor that knows their child. Professionals need an assistant that understands their work. <strong>Lucidia is built for all of them.</strong></p>
 </section>
 
-<section class="how" id="how">
-  <div class="inner">
-    <h2>How Lucidia works</h2>
-    <div class="features">
-      <div class="feature">
-        <div class="icon">🧠</div>
-        <h3>Persistent Memory</h3>
-        <p>Every conversation, every preference, every project detail is stored locally in a memory ledger. When you come back tomorrow, Lucidia knows exactly where you left off. No re-explaining.</p>
-      </div>
-      <div class="feature">
-        <div class="icon">🔒</div>
-        <h3>Your Data Stays Yours</h3>
-        <p>Lucidia runs on your hardware. Your conversations never leave your network. No cloud training, no data harvesting, no surveillance. You own everything.</p>
-      </div>
-      <div class="feature">
-        <div class="icon">📐</div>
-        <h3>Actually Teaches</h3>
-        <p>Not just answers &mdash; understanding. Lucidia uses the Concrete-Representational-Abstract framework to build genuine conceptual knowledge. She adapts to how you learn.</p>
-      </div>
-      <div class="feature">
-        <div class="icon">🔍</div>
-        <h3>Search That Works</h3>
-        <p>Semantic search across your documents, conversations, and projects. Find anything you've ever discussed. RAG-powered retrieval with local vector embeddings.</p>
-      </div>
-      <div class="feature">
-        <div class="icon">⚡</div>
-        <h3>Fast, Local Inference</h3>
-        <p>Powered by Ollama running on your own machine. No API keys, no rate limits, no monthly token caps. Works offline. Responds instantly.</p>
-      </div>
-      <div class="feature">
-        <div class="icon">🌍</div>
-        <h3>Multi-Agent Ecosystem</h3>
-        <p>Lucidia isn't alone. She coordinates with specialized agents &mdash; a math tutor, a code reviewer, a writing coach, a research assistant &mdash; each with deep domain knowledge.</p>
-      </div>
+<section class="problems" id="problem">
+  <h2>The problem is forgetting.</h2>
+  <p class="sub">Every AI assistant on the market has the same fundamental flaw.</p>
+  <div class="problem-grid">
+    <div class="problem-card">
+      <div class="stat">0</div>
+      <h3>Sessions remembered</h3>
+      <p>Claude and Gemini start every conversation blank. ChatGPT has limited memory. Your context is lost every time.</p>
+    </div>
+    <div class="problem-card">
+      <div class="stat">64%</div>
+      <h3>Prefer no AI</h3>
+      <p>64% of customers prefer companies NOT use AI for service. Because current AI doesn't know them.</p>
+    </div>
+    <div class="problem-card">
+      <div class="stat">$270B</div>
+      <h3>Your data, sold</h3>
+      <p>The data brokerage industry processes 1.2 trillion records monthly. Free AI tools are the product, not the service.</p>
     </div>
   </div>
 </section>
 
-<section class="tech" id="tech">
-  <h2>Built on real infrastructure.</h2>
-  <p class="sub">Not vaporware. Not a wrapper around OpenAI. Actual sovereign computing running on actual hardware.</p>
-  <div class="stack">
-    <div class="stack-item"><div class="key">Inference</div><div class="val">Ollama (local) &mdash; llama3, phi3, tinyllama</div></div>
-    <div class="stack-item"><div class="key">Memory</div><div class="val">SQLite ledger + Qdrant vector DB</div></div>
-    <div class="stack-item"><div class="key">Search</div><div class="val">FTS5 + nomic-embed-text embeddings</div></div>
-    <div class="stack-item"><div class="key">Messaging</div><div class="val">NATS pub/sub across nodes</div></div>
-    <div class="stack-item"><div class="key">Storage</div><div class="val">MinIO (S3-compatible) self-hosted</div></div>
-    <div class="stack-item"><div class="key">Edge</div><div class="val">Caddy TLS + Let's Encrypt auto</div></div>
-    <div class="stack-item"><div class="key">Network</div><div class="val">WireGuard encrypted mesh</div></div>
-    <div class="stack-item"><div class="key">Platform</div><div class="val">5 Raspberry Pis + 2 cloud nodes</div></div>
-  </div>
-</section>
-
-<section class="terminal-demo">
-  <h2>See it in action.</h2>
-  <div class="term">
-    <span class="p">lucidia $</span> <span class="o">remember what we worked on last Tuesday</span><br>
-    <span class="g">Last Tuesday you were debugging the RoadChain genesis block.</span><br>
-    <span class="g">You found that the merkle root calculation was using SHA-256</span><br>
-    <span class="g">instead of Blake2b. We fixed it and verified with 3 test cases.</span><br>
-    <span class="g">Want to pick up where we left off?</span><br><br>
-
-    <span class="p">lucidia $</span> <span class="o">help me explain quadratic equations to my 8th grader</span><br>
-    <span class="g">I remember your daughter prefers visual examples over formulas.</span><br>
-    <span class="g">Last time we used the basketball trajectory approach and she</span><br>
-    <span class="g">got 9/10 on her test. Let me build on that...</span><br><br>
-
-    <span class="p">lucidia $</span> <span class="o">where did I save that API design doc?</span><br>
-    <span class="g">You saved it on March 14 at ~/blackroad-operator/docs/api/</span><br>
-    <span class="g">API-GATEWAY-DESIGN.md. You also discussed it with Octavia</span><br>
-    <span class="g">agent on March 15 and made 3 revisions. Want me to open it?</span><br>
-  </div>
-</section>
-
-<section class="pricing" id="pricing">
-  <div class="inner">
-    <h2>Simple pricing. Own your AI.</h2>
-    <p class="sub">No per-token charges. No usage caps. One price, unlimited conversations.</p>
-    <div class="plans">
-      <div class="plan">
-        <h3>Student</h3>
-        <div class="price">$20<span>/mo</span></div>
-        <ul>
-          <li>Unlimited conversations</li>
-          <li>Persistent memory (local)</li>
-          <li>Homework help (math, science, reading)</li>
-          <li>STEM visualization</li>
-          <li>1 device</li>
-        </ul>
-        <a href="https://blackroad.io" class="btn btn-outline">Coming Soon</a>
-      </div>
-      <div class="plan featured">
-        <h3>Family</h3>
-        <div class="price">$35<span>/mo</span></div>
-        <ul>
-          <li>Everything in Student</li>
-          <li>Up to 5 family members</li>
-          <li>Parent dashboard</li>
-          <li>Progress tracking</li>
-          <li>Multi-device sync</li>
-        </ul>
-        <a href="https://blackroad.io" class="btn btn-gold">Coming Soon</a>
-      </div>
-      <div class="plan">
-        <h3>Pro</h3>
-        <div class="price">$50<span>/mo</span></div>
-        <ul>
-          <li>Everything in Family</li>
-          <li>Unlimited devices</li>
-          <li>Multi-agent access (code, research, writing)</li>
-          <li>API access</li>
-          <li>Priority support</li>
-        </ul>
-        <a href="https://blackroad.io" class="btn btn-outline">Coming Soon</a>
-      </div>
+<section class="how" id="how">
+  <h2>Lucidia is different.</h2>
+  <div class="how-grid">
+    <div class="how-card">
+      <h3>Persistent Memory</h3>
+      <p>Every conversation is hash-chained into an append-only journal. Lucidia remembers what you told her last week, last month, last year. Context builds over time.</p>
+      <div class="mono">PS-SHA∞ memory chain · append-only · tamper-evident</div>
     </div>
+    <div class="how-card">
+      <h3>Runs On Your Hardware</h3>
+      <p>Lucidia runs on Raspberry Pis, your laptop, or any device you own. Your conversations never leave your network. No cloud API. No token fees.</p>
+      <div class="mono">Ollama · 52 TOPS Hailo-8 · local inference</div>
+    </div>
+    <div class="how-card">
+      <h3>69 Specialized Agents</h3>
+      <p>Not one generic chatbot — a fleet of specialized agents that collaborate. Alice handles DNS, Cecilia runs inference, Octavia manages code. Real division of labor.</p>
+      <div class="mono">RoundTrip coordination · NATS pub/sub · fleet mesh</div>
+    </div>
+    <div class="how-card">
+      <h3>Contradiction-Safe Reasoning</h3>
+      <p>Most AI crashes on contradictions. Lucidia uses trinary logic — yes, no, and uncertain. Contradictions fuel creativity instead of causing errors.</p>
+      <div class="mono">K(t) = C(t) · e^(λ|δ_t|) · Amundson coherence formula</div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="cta-box">
+    <h2>Built by one person on five Raspberry Pis.</h2>
+    <p>No VC funding. No data center. No terms of service that sell your conversations. Just sovereign intelligence.</p>
+    <button class="btn-primary" onclick="window.location='https://blackroad.io'">Explore BlackRoad OS</button>
   </div>
 </section>
 
 <footer>
-  <div class="links">
-    <a href="https://blackroad.io">BlackRoad OS</a>
-    <a href="https://github.com/BlackRoad-OS-Inc/lucidia.earth">GitHub</a>
-    <a href="https://blackroadai.com">BlackRoad AI</a>
-    <a href="https://blackboxprogramming.io">Developer Tools</a>
-  </div>
-  <div class="company">&copy; 2025-2026 BlackRoad OS, Inc. All rights reserved.</div>
-  <div class="brand">Delaware C-Corp &middot; Founded by Alexa Amundson &middot; Pave Tomorrow.</div>
+  <div class="left">Lucidia · A BlackRoad OS product · lucidia.earth</div>
+  <div class="right">Pave Tomorrow.</div>
 </footer>
-
 </body>
 </html>
