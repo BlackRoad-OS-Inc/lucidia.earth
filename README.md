@@ -1,5 +1,13 @@
 # lucidia.earth
 
+> BlackRoad OS, Inc. — lucidia.earth domain repo. Proprietary.
+
+Part of the [BlackRoad OS](https://blackroad.io) ecosystem — [BlackRoad-OS-Inc](https://github.com/BlackRoad-OS-Inc)
+
+---
+
+# lucidia.earth
+
 > AI creator platform — make content with AI, keep 90%+ of the revenue.
 
 **Live at [https://lucidia.earth](https://lucidia.earth)**
